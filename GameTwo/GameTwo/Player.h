@@ -13,11 +13,11 @@ class Player
 	float jumpVelocity;
 	float gravity;
 	sf::FloatRect rect;
+	bool isOnTheFloor = 1;
 public:
-	Player(const std::string fileName, const std::string playerName);
+	Player(const std::string fileName, const std::string playerName, sf::Vector2f pos);
 	void WSADmovement(float deltaTime);
 	void ARROWSmovement(float deltaTime);
 	void setPosition(float x, float y);
-	void render(sf::RenderWindow& window, float r);
-	sf::FloatRect getRect();
+	void render(sf::RenderWindow& window);
 };

@@ -20,8 +20,10 @@ void Game::update(float deltaTime)
 
 void Game::renderGame()
 {
-	p1->render(window, p1->getRect().left + 550);
-	p2->render(window, p2->getRect().left + 50);
+	/*p1->setPosition(200, 100);
+	p2->setPosition(500, 100);*/
+	p1->render(window);
+	p2->render(window);
 }
 
 Game::~Game()
