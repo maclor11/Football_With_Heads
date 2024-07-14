@@ -10,6 +10,7 @@ class Player
 	std::string name;
 	float speed;
 	float verticalVelocity;
+	float jumpVelocity;
 	float gravity;
 	sf::FloatRect rect;
 public:
@@ -17,6 +18,6 @@ public:
 	void WSADmovement(float deltaTime);
 	void ARROWSmovement(float deltaTime);
 	void setPosition(float x, float y);
-	void render(sf::RenderWindow& window, float x, float y);
+	void render(sf::RenderWindow& window, float r);
 	sf::FloatRect getRect();
 };

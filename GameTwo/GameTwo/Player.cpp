@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(const std::string fileName, const std::string playerName) : speed(300), verticalVelocity(0), name(playerName), gravity(.8)
+Player::Player(const std::string fileName, const std::string playerName) : speed(300), verticalVelocity(0), name(playerName), gravity(20), jumpVelocity(-450)
 {
 	if (!playerAppearance.loadFromFile(fileName))
 	{
@@ -16,7 +16,7 @@ void Player::setPosition(float x, float y)
 	player.setPosition(x, y);
 }
 
-void Player::WSADmovement(float deltaTime)
+void Player::WSADmovement(float deltaTime) // dorobic ze kiedy dotyka ziemi moze dopiero znowu skoczyc
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		rect.left -= speed * deltaTime;
@@ -26,11 +26,20 @@ void Player::WSADmovement(float deltaTime)
 	verticalVelocity += gravity;
 	rect.top += verticalVelocity * deltaTime;
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		verticalVelocity = jumpVelocity;
+		rect.top -= 2 * verticalVelocity * deltaTime;
+	}
+
+	verticalVelocity += gravity * deltaTime;
+	rect.top += verticalVelocity * deltaTime;
+
 	if ((rect.top + rect.height) > 600)
 		rect.top = 600 - rect.height;
 }
 
-void Player::ARROWSmovement(float deltaTime)
+void Player::ARROWSmovement(float deltaTime) // dorobic ze kiedy dotyka ziemi moze dopiero znowu skoczyc
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		rect.left -= speed * deltaTime;
@@ -40,13 +49,22 @@ void Player::ARROWSmovement(float deltaTime)
 	verticalVelocity += gravity;
 	rect.top += verticalVelocity * deltaTime;
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		verticalVelocity = jumpVelocity;
+		rect.top -= 2 * verticalVelocity * deltaTime;
+	}
+
+	verticalVelocity += gravity * deltaTime;
+	rect.top += verticalVelocity * deltaTime;
+
 	if ((rect.top + rect.height) > 600)
 		rect.top = 600 - rect.height;
 }
 
-void Player::render(sf::RenderWindow& window, float x, float y)
+void Player::render(sf::RenderWindow& window, float r)
 {
-	player.setPosition(x, y);
+	player.setPosition(r, rect.top);
 	player.setScale(rect.width / playerAppearance.getSize().x, rect.height / playerAppearance.getSize().y);
 	window.draw(player);
 }
